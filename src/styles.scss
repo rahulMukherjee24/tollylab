@@ -1,1 +1,59 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.scss */
+
+/* 1. Global box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Reset + layout */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background-color: #000; // fallback to blend with hero bg
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    scroll-behavior: smooth;
+}
+
+/* 3. Remove unwanted outline on focus */
+button,
+input,
+textarea {
+    outline: none;
+    font-family: inherit;
+}
+
+/* 4. Responsive media defaults */
+img,
+video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 5. Remove list styles */
+ul,
+ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 6. Anchor tag reset */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 7. Make root container full screen */
+.fullscreen-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}

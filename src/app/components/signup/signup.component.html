@@ -1,0 +1,30 @@
+<div class="signup-backdrop" *ngIf="visible" (click)="closeModal()">
+    <div class="signup-modal" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeModal()">✕</button>
+        <h2>TOLLYLAB</h2>
+        <h3>Create Account</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, dicta consequuntur.</p>
+
+        <!-- Add [(ngModel)] for two-way binding -->
+        <input type="email" placeholder="Email" [(ngModel)]="email" />
+        <input type="password" placeholder="Password" [(ngModel)]="password" />
+
+        <label class="terms">
+            <input type="checkbox" [(ngModel)]="acceptedTerms" />
+            <span>I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></span>
+        </label>
+
+        <!-- Trigger signup -->
+        <button class="login-btn" (click)="onEmailSignup()">Signup</button>
+
+        <div class="divider"><span>OR</span></div>
+
+        <!-- Trigger Google login -->
+        <button class="social google" (click)="onGoogleSignup()">Continue with Google</button>
+
+        <p class="footer">
+            Already have an account? <a href="#">Sign in</a>
+        </p>
+
+    </div>
+</div>

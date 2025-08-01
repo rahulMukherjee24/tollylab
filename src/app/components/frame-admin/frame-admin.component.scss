@@ -1,0 +1,92 @@
+.frame-admin {
+    .container {
+    select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #2a2a2a;
+            color: #fff;
+            font-size: 1rem;
+            appearance: none;
+    
+            &:focus {
+                outline: none;
+                border-color: #4caf50;
+            }
+        }
+        max-width: 500px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        background: #1a1a1a;
+        border-radius: 12px;
+        color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #2a2a2a;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #4caf50;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+
+            &:hover {
+                background: #43a047;
+            }
+        }
+
+        .success,
+        .error {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .container {
+            padding: 1rem;
+            border-radius: 8px;
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            input,
+            button {
+                font-size: 0.95rem;
+            }
+        }
+    }
+}

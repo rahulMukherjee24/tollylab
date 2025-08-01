@@ -1,0 +1,114 @@
+.frame-counter {
+    padding: 4rem 1rem;
+    background: #0a0a0a;
+    color: #fff;
+    text-align: center;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+
+        span {
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+    }
+
+    .subtitle {
+        margin: 0.5rem 0 2rem;
+        font-size: 0.95rem;
+        color: #ccc;
+    }
+
+    .frame-carousel-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+
+            &.left {
+                left: -10px;
+            }
+
+            &.right {
+                right: -10px;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+    .frame-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        scroll-behavior: smooth;
+        padding-bottom: 1rem;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .frame-card {
+            flex: 0 0 auto;
+            width: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #111;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .frame-counter {
+        padding: 3rem 1rem;
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .frame-scroll {
+            .frame-card {
+                width: 140px;
+            }
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            padding: 0.25rem 0.5rem;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<section class="frame-admin">
+    <div class="container">
+        <h2>Add Frame Counter Image</h2>
+
+        <input type="text" placeholder="Paste ImgBB direct URL" [(ngModel)]="imageUrl" />
+
+        <select [(ngModel)]="selectedFilmType">
+            <option value="" disabled selected>Select Film Type</option>
+            <option *ngFor="let type of filmTypes" [value]="type.key">
+                {{ type.value }}
+            </option>
+        </select>
+
+        <button (click)="addImage()">Add to Firestore</button>
+
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </div>
+</section>

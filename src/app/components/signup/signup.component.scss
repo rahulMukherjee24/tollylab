@@ -1,0 +1,124 @@
+.signup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.signup-modal {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    color: #000;
+    position: relative;
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.terms {
+    text-align: left;
+    font-size: 0.85rem;
+    margin: 0.5rem 0 1rem;
+    display: flex;
+    gap: 0.5rem;
+
+    input[type="checkbox"] {
+        margin-top: 2px;
+    }
+
+    a {
+        color: #0077cc;
+    }
+}
+
+.login-btn {
+    background-color: #444;
+    color: #fff;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.divider {
+    position: relative;
+    margin: 1rem 0;
+    text-align: center;
+
+    span {
+        background: white;
+        padding: 0 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #ccc;
+        z-index: 0;
+    }
+}
+
+.social {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+
+    &.google {
+        background: #fff;
+        color: #444;
+        border: 1px solid #ccc;
+    }
+
+    &.apple {
+        background: #000;
+        color: #fff;
+    }
+}
+
+.footer {
+    font-size: 0.9rem;
+
+    a {
+        color: #0077cc;
+    }
+}

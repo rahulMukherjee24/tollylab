@@ -1,0 +1,14 @@
+<div class="modal" *ngIf="visible">
+    <div class="modal-content">
+        <h2>Login</h2>
+        <form (submit)="onLogin($event)">
+            <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+            <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+            <div class="buttons">
+                <button type="submit">Login</button>
+                <button type="button" class="cancel" (click)="close.emit()">Cancel</button>
+            </div>
+            <p *ngIf="error" class="error">{{ error }}</p>
+        </form>
+    </div>
+</div>

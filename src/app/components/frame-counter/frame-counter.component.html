@@ -1,0 +1,24 @@
+<section class="frame-counter">
+    <div class="container">
+        <h2>
+            <span>explore</span><br />
+            FRAME COUNTER
+        </h2>
+
+        <p class="subtitle">
+            Explore FRAME COUNTERS in this unique gallery. All these images were processed in-house at TOLLYLAB.
+        </p>
+
+        <div class="frame-carousel-wrapper">
+            <button class="arrow left" (click)="scrollFrames('left')">&#10094;</button>
+
+            <div class="frame-scroll" #scrollContainer>
+                <div class="frame-card" *ngFor="let frame of frames">
+                    <img [src]="frame" alt="Frame image" loading="lazy" />
+                </div>
+            </div>
+
+            <button class="arrow right" (click)="scrollFrames('right')">&#10095;</button>
+        </div>
+    </div>
+</section>

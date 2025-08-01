@@ -1,0 +1,19 @@
+<section class="film-section">
+    <div class="header-group">
+        <h2>Films are still <span class="highlight">affordable</span></h2>
+        <p>Explore our range of Tollygrunge films</p>
+    </div>
+
+    <div class="scroll-wrapper">
+        <button class="arrow left" (click)="scrollLeft(scrollContainer)">&#10094;</button>
+
+        <div class="product-scroll" #scrollContainer>
+            <div class="product-card" *ngFor="let film of products">
+                <img [src]="film.img" [alt]="film.title" />
+                <h4>{{ film.title }}</h4>
+            </div>
+        </div>
+
+        <button class="arrow right" (click)="scrollRight(scrollContainer)">&#10095;</button>
+    </div>
+</section>

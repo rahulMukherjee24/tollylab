@@ -1,0 +1,116 @@
+.film-section {
+    padding: 4rem 5% 2rem;
+    background: transparent;
+    color: #fff;
+    text-align: center;
+
+    .header-group {
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+
+            .highlight {
+                color: #f9cc00;
+            }
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .scroll-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .arrow {
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            z-index: 2;
+            transition: background 0.2s ease;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            &.left {
+                left: 0;
+            }
+
+            &.right {
+                right: 0;
+            }
+        }
+
+        .product-scroll {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: 100%;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .product-card {
+                flex: 0 0 auto;
+                width: 200px;
+                background: #222;
+                border-radius: 8px;
+                padding: 1rem;
+                text-align: center;
+                scroll-snap-align: start;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 4px;
+                    margin-bottom: 0.5rem;
+                }
+
+                h4 {
+                    font-size: 1rem;
+                    color: #f9cc00;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header-group {
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        .product-scroll {
+            padding: 1rem 1rem;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            padding: 0.25rem 0.5rem;
+        }
+    }
+}
