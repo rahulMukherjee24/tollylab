@@ -10,9 +10,15 @@ import {
   User,
   signOut,
 } from '@angular/fire/auth';
-import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  doc,
+  docData,
+  getDoc,
+  setDoc,
+} from '@angular/fire/firestore';
 import { inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -21,8 +27,16 @@ import { Router } from '@angular/router';
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
+  currentUserData$ = this.currentUser$.pipe(
+    switchMap((user) => {
+      if (!user) return of(null);
+      const userDocRef = doc(this.firestore, `Users/${user.uid}`);
+      return docData(userDocRef, { idField: 'id' });
+    })
+  );
   private auth = inject(Auth);
   private firestore = inject(Firestore);
+  public isAdmin: boolean = false;
 
   constructor(private router: Router) {
     onAuthStateChanged(this.auth, (user) => {
@@ -66,11 +80,12 @@ export class AuthService {
         displayName: user.displayName || '',
         photoURL: user.photoURL || '',
         createdAt: new Date().toISOString(),
+        isAdmin: false,
       });
     }
   }
 
-  logout(): Promise<void> {
+  async logout(): Promise<void> {
     return signOut(this.auth)
       .then(() => {
         console.log('Logged out successfully');

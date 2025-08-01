@@ -1,0 +1,80 @@
+<header class="navbar">
+    <!-- Left: Logo -->
+    <div class="navbar-left">
+        <div class="logo-text">TOLLYLAB</div>
+    </div>
+
+    <!-- Center: Navbar Links -->
+    <nav class="navbar-center">
+        <a routerLink="/">Home</a>
+        <a routerLink="/films">Films</a>
+        <a routerLink="/about">About</a>
+        <a *ngIf="isAdmin" routerLink="/admin">Admin</a>
+    </nav>
+
+    <!-- Right: Buttons + Hamburger -->
+    <div class="navbar-right">
+        <ng-container *ngIf="!isLoggedIn; else loggedIn">
+            <button class="btn signup-btn" (click)="openSignup()">Signup</button>
+            <button class="btn" (click)="openLogin()">Login</button>
+        </ng-container>
+
+
+        <ng-template #loggedIn>
+            <!-- Cart Button -->
+            <button class="btn">🛒</button>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-container" style="margin-top: 10px;" (click)="toggleProfileTray()"
+                (clickOutside)="showProfileTray = false">
+                <button class="btn profile-btn">👤</button>
+                <div class="profile-dropdown" [class.open]="showProfileTray">
+                    <ul>
+                        <li (click)="goToOrders()">🧾 Order History</li>
+                        <li (click)="authService.logout()">🚪 Logout</li>
+                    </ul>
+                </div>
+            </div>
+        </ng-template>
+
+        <button class="hamburger" (click)="toggleMobileMenu()">☰</button>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    <button class="close-btn" (click)="toggleMobileMenu()">×</button>
+    <ul>
+        <li><a routerLink="/" (click)="closeMobileMenu()">Home</a></li>
+        <li><a routerLink="/films" (click)="closeMobileMenu()">Films</a></li>
+        <li><a routerLink="/about" (click)="closeMobileMenu()">About</a></li>
+        <li>
+            <ng-container *ngIf="isAdmin">
+                <a (click)="closeMobileMenu()">Admin</a>
+            </ng-container>
+        </li>
+        <li>
+            <ng-container *ngIf="!isLoggedIn">
+                <button class="btn" (click)="openLogin(); closeMobileMenu()">Login</button>
+            </ng-container>
+        </li>
+        <li>
+            <ng-container *ngIf="!isLoggedIn">
+                <button class="btn signup-btn" (click)="openSignup(); closeMobileMenu()">Sign Up</button>
+            </ng-container>
+        </li>
+        <li>
+            <ng-container *ngIf="isLoggedIn">
+                <button class="btn" (click)="closeMobileMenu()">🛒</button>
+            </ng-container>
+        </li>
+        <li>
+            <ng-container *ngIf="isLoggedIn">
+                <button class="btn" (click)="closeMobileMenu()">👤</button>
+            </ng-container>
+        </li>
+
+    </ul>
+</div>
+<app-signup [visible]="showSignup" (close)="showSignup = false"></app-signup>
+<app-login [visible]="showLogin" (close)="showLogin = false"></app-login>
