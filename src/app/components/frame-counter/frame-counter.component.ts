@@ -7,15 +7,17 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-frame-counter',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './frame-counter.component.html',
   styleUrls: ['./frame-counter.component.scss'],
 })
 export class FrameCounterComponent implements OnInit {
+  constructor(private router: Router) {}
   private firestore = inject(Firestore);
   frames: string[] = [];
   loading = true;
@@ -46,5 +48,9 @@ export class FrameCounterComponent implements OnInit {
       left: direction === 'right' ? scrollAmount : -scrollAmount,
       behavior: 'smooth',
     });
+  }
+
+  navigateToGallery() {
+    this.router.navigate(['/frame-gallery']);
   }
 }

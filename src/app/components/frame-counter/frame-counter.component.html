@@ -14,7 +14,9 @@
 
             <div class="frame-scroll" #scrollContainer>
                 <div class="frame-card" *ngFor="let frame of frames">
-                    <img [src]="frame" alt="Frame image" loading="lazy" />
+                    <div (click)="navigateToGallery()" style="cursor: pointer;">
+                        <img [src]="frame" alt="Frame image" loading="lazy" />
+                    </div>
                 </div>
             </div>
 

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { FrameAdminComponent } from './components/frame-admin/frame-admin.component';
+import { FrameGalleryComponent } from './frame-gallery/frame-gallery.component';
 
 export const routes: Routes = [
   {
@@ -11,4 +12,5 @@ export const routes: Routes = [
     path: 'admin',
     component: FrameAdminComponent,
   },
+  { path: 'frame-gallery', component: FrameGalleryComponent },
 ];

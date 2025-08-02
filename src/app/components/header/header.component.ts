@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { SignupComponent } from '../signup/signup.component';
 import { LoginComponent } from '../login/login.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,13 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  constructor(private router: Router) {}
+
+  navigateAndClose(path: string) {
+    this.router.navigate([path]);
+    this.closeMobileMenu();
+  }
+
   authService = inject(AuthService);
   isMobileMenuOpen = false;
   showSignup = false;
