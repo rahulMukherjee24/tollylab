@@ -1,0 +1,6 @@
+<section class="gallery-container">
+    <h2>Frame Gallery</h2>
+    <div class="gallery-grid">
+        <img *ngFor="let url of frameUrls$ | async" [src]="url" alt="Frame" loading="lazy" />
+    </div>
+</section>
