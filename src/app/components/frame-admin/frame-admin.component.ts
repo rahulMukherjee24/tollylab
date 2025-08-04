@@ -30,7 +30,7 @@ export class FrameAdminComponent {
 
     const trimmed = this.imageUrl.trim();
 
-    if (!trimmed || !trimmed.startsWith('https://i.ibb.co/')) {
+    if (!trimmed || !trimmed.startsWith('https://pub-')) {
       this.errorMessage = 'Please enter a valid direct ImgBB image URL.';
       return;
     }

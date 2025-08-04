@@ -17,6 +17,8 @@
                     <div (click)="navigateToGallery()" style="cursor: pointer;">
                         <img [src]="frame" alt="Frame image" loading="lazy" />
                     </div>
+                    <app-add-to-cart-button [imageUrl]="frame" (cartAdd)="handleAddToCart($event)">
+                    </app-add-to-cart-button>
                 </div>
             </div>
 

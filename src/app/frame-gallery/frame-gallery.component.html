@@ -1,6 +1,27 @@
 <section class="gallery-container">
     <h2>Frame Gallery</h2>
-    <div class="gallery-grid">
-        <img *ngFor="let url of frameUrls$ | async" [src]="url" alt="Frame" loading="lazy" />
+
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="spinner-wrapper">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid" *ngIf="!isLoading">
+        <div class="gallery-card" *ngFor="let url of pagedUrls$ | async">
+            <img [src]="url" alt="Frame" loading="lazy" />
+
+            <!-- Add to Cart button -->
+            <button class="add-to-cart-btn" (click)="addToCart(url)">
+                🛒 Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1 && !isLoading">
+        <button (click)="changePage(-1)" [disabled]="currentPage === 1">Prev</button>
+        <span>Page {{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="changePage(1)" [disabled]="currentPage === totalPages">Next</button>
     </div>
 </section>

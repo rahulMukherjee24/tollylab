@@ -8,11 +8,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Router, RouterModule } from '@angular/router';
+import { AddToCartButtonComponent } from '../add-to-cart/add-to-cart-button.component';
 
 @Component({
   selector: 'app-frame-counter',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, AddToCartButtonComponent],
   templateUrl: './frame-counter.component.html',
   styleUrls: ['./frame-counter.component.scss'],
 })
@@ -52,5 +53,9 @@ export class FrameCounterComponent implements OnInit {
 
   navigateToGallery() {
     this.router.navigate(['/frame-gallery']);
+  }
+
+  handleAddToCart(url: string) {
+    console.log('Cart Add from Frame-Counter:', url);
   }
 }

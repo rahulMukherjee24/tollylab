@@ -72,4 +72,8 @@ export class HeaderComponent {
     this.dropdownOpen = false;
     this.authService.logout(); // replace with your actual logout logic
   }
+
+  openCart() {
+    this.router.navigate(['/cart']);
+  }
 }
