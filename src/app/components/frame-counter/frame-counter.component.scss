@@ -87,7 +87,7 @@
             img {
                 width: 100%;
                 height: 250px; // or whatever fixed height you want for the cards
-                object-fit: cover; // THIS makes sure image fills without distortion, crops overflow
+                object-fit: contain; // THIS makes sure image fills without distortion, crops overflow
                 display: block;
             }
 

@@ -4,6 +4,7 @@ import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { RouterModule } from '@angular/router';
 import { map, Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { AddToCartButtonComponent } from '../components/add-to-cart/add-to-cart-button.component';
+import { CartItem, CartService } from '../service/cart.service';
 
 @Component({
   standalone: true,
@@ -21,7 +22,7 @@ export class FrameGalleryComponent implements OnInit {
   totalPages = 1;
   isLoading = true;
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private cartService: CartService) {}
 
   ngOnInit(): void {
     const frameCollection = collection(this.firestore, 'frameCounter');
@@ -64,7 +65,13 @@ export class FrameGalleryComponent implements OnInit {
   }
 
   addToCart(url: string) {
-    console.log('Add to Cart clicked for:', url);
-    // Future: You can pass productId, title, price here when available
+    const item: CartItem = {
+      imageUrl: url,
+      title: 'Frame Counter Image',
+      price: 199, // or use logic if price varies
+    };
+
+    this.cartService.addToCart(item);
+    console.log('Added to cart:', item);
   }
 }

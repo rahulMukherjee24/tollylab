@@ -11,9 +11,10 @@
             <div class="product-card" *ngFor="let film of products">
                 <img [src]="film.img" [alt]="film.title" />
                 <h4>{{ film.title }}</h4>
+                <button class="cart-btn" (click)="handleAddToCart(film)">🛒 Add to Cart</button>
             </div>
-        </div>
 
+        </div>
         <button class="arrow right" (click)="scrollRight(scrollContainer)">&#10095;</button>
     </div>
 </section>

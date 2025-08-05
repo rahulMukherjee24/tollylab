@@ -1,12 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-
-interface CartItem {
-  imageUrl: string;
-  title: string;
-  price: number;
-  size?: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { CartItem, CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -15,23 +9,19 @@ interface CartItem {
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent {
-  cartItems: CartItem[] = [
-    {
-      imageUrl: 'https://via.placeholder.com/150',
-      title: 'Sample Frame',
-      price: 250,
-      size: '8x10',
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/150',
-      title: 'Another Frame',
-      price: 300,
-    },
-  ];
+export class CartComponent implements OnInit {
+  cartItems: CartItem[] = [];
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.cartService.cartItems$.subscribe((items) => {
+      this.cartItems = items;
+    });
+  }
 
   removeFromCart(item: CartItem): void {
-    this.cartItems = this.cartItems.filter((i) => i !== item);
+    this.cartService.removeFromCart(item);
   }
 
   getTotalPrice(): number {

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Router, RouterModule } from '@angular/router';
 import { AddToCartButtonComponent } from '../add-to-cart/add-to-cart-button.component';
+import { CartItem, CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-frame-counter',
@@ -18,7 +19,7 @@ import { AddToCartButtonComponent } from '../add-to-cart/add-to-cart-button.comp
   styleUrls: ['./frame-counter.component.scss'],
 })
 export class FrameCounterComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cartService: CartService) {}
   private firestore = inject(Firestore);
   frames: string[] = [];
   loading = true;
@@ -56,6 +57,13 @@ export class FrameCounterComponent implements OnInit {
   }
 
   handleAddToCart(url: string) {
-    console.log('Cart Add from Frame-Counter:', url);
+    const item: CartItem = {
+      imageUrl: url,
+      title: 'Frame Counter Image',
+      price: 199, // or use logic if price varies
+    };
+
+    this.cartService.addToCart(item);
+    console.log('Added to cart:', item);
   }
 }

@@ -12,9 +12,16 @@ export class AddToCartButtonComponent {
   @Input() imageUrl!: string;
   @Output() cartAdd = new EventEmitter<string>();
 
+  clicked = false;
+
   handleClick(event: Event): void {
-    event.stopPropagation(); // Prevent parent click if wrapped in clickable div
-    console.log('Add to Cart:', this.imageUrl);
+    event.stopPropagation();
+    this.clicked = true;
     this.cartAdd.emit(this.imageUrl);
+
+    // Reset animation state after it completes
+    setTimeout(() => {
+      this.clicked = false;
+    }, 800); // Match this with your CSS animation duration
   }
 }
