@@ -8,10 +8,13 @@
         <button class="arrow left" (click)="scrollLeft(scrollContainer)">&#10094;</button>
 
         <div class="product-scroll" #scrollContainer>
-            <div class="product-card" *ngFor="let film of products">
+            <div class="product-card" *ngFor="let film of products; let i = index">
                 <img [src]="film.img" [alt]="film.title" />
                 <h4>{{ film.title }}</h4>
-                <button class="cart-btn" (click)="handleAddToCart(film)">🛒 Add to Cart</button>
+                <p class="price">₹{{ film.price }}</p>
+                <button class="cart-btn" [class.clicked]="clickedIndex === i" (click)="handleAddToCart(film, i)">
+                    🛒 Add to Cart
+                </button>
             </div>
 
         </div>

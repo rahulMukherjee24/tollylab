@@ -36,10 +36,10 @@
             cursor: pointer;
             padding: 0.5rem 1rem;
             z-index: 2;
-            transition: background 0.2s ease;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
+            transition: background 0.2s ease;
 
             &:hover {
                 background: rgba(255, 255, 255, 0.2);
@@ -73,21 +73,61 @@
                 flex: 0 0 auto;
                 width: 200px;
                 background: #222;
-                border-radius: 8px;
+                border-radius: 10px;
                 padding: 1rem;
-                text-align: center;
                 scroll-snap-align: start;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-4px);
+                }
 
                 img {
                     width: 100%;
-                    height: auto;
-                    border-radius: 4px;
-                    margin-bottom: 0.5rem;
+                    border-radius: 6px;
+                    margin-bottom: 0.75rem;
+                    object-fit: cover;
                 }
 
                 h4 {
                     font-size: 1rem;
+                    font-weight: 600;
                     color: #f9cc00;
+                    margin-bottom: 0.25rem;
+                }
+
+                .price {
+                    font-size: 0.95rem;
+                    color: #ccc;
+                    margin-bottom: 0.75rem;
+                }
+
+                .cart-btn {
+                    padding: 0.5rem;
+                    font-size: 0.85rem;
+                    background-color: rgba(255, 255, 255, 0.1);
+                    color: #fff;
+                    border: 1px solid #888;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: all 0.2s ease-in-out;
+
+                    &:hover {
+                        background-color: #f05454;
+                        color: white;
+                        border-color: #f05454;
+                    }
+
+                    &.clicked {
+                        animation: cart-click-pulse 0.6s ease-in-out;
+                        background: linear-gradient(to right, #ffe1e1, #ffffff);
+                        color: #222;
+                        box-shadow: 0 0 10px rgba(240, 84, 84, 0.5);
+                    }
                 }
             }
         }
@@ -104,13 +144,33 @@
             }
         }
 
-        .product-scroll {
-            padding: 1rem 1rem;
-        }
+        .scroll-wrapper {
+            flex-direction: column;
 
-        .arrow {
-            font-size: 1.5rem;
-            padding: 0.25rem 0.5rem;
+            .arrow {
+                display: none;
+            }
+
+            .product-scroll {
+                padding: 1rem 1rem;
+            }
         }
+    }
+}
+
+@keyframes cart-click-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(240, 84, 84, 0.3);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 12px rgba(240, 84, 84, 0.6);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(240, 84, 84, 0);
     }
 }
