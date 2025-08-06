@@ -1,0 +1,17 @@
+<section class="film-admin">
+    <div class="container">
+        <h2>Add Film Scroll</h2>
+
+        <input type="text" placeholder="Paste direct URL" [(ngModel)]="imageUrl" />
+
+        <input type="text" placeholder="Enter Film Type (e.g., bnw, color)" [(ngModel)]="selectedFilmType"
+            class="film-type-input" />
+
+        <input type="number" placeholder="Enter Price per roll" [(ngModel)]="pricePerRoll" class="film-type-input" />
+
+        <button (click)="addImage()">Add to Firestore</button>
+
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </div>
+</section>
