@@ -3,6 +3,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideZoneChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http'; // 👈 Added for HTTP requests
 
 import { routes } from './app.routes';
 
@@ -18,11 +19,12 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(),
+    provideHttpClient(), // 👈 Added here
     importProvidersFrom(
       provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
       provideFirestore(() => getFirestore()),
       provideStorage(() => getStorage()),
-      provideAuth(() => getAuth()) // 👈 Add this line
+      provideAuth(() => getAuth())
     ),
   ],
 };

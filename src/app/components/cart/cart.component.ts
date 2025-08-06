@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartItem, CartService } from '../../service/cart.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { CartItem, CartService } from '../../service/cart.service';
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartService.cartItems$.subscribe((items) => {
@@ -26,5 +27,9 @@ export class CartComponent implements OnInit {
 
   getTotalPrice(): number {
     return this.cartItems.reduce((total, item) => total + item.price, 0);
+  }
+
+  proceedToCheckout(): void {
+    this.router.navigate(['/checkout']);
   }
 }

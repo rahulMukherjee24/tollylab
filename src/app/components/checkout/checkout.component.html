@@ -1,0 +1,8 @@
+<section class="checkout-container">
+    <h2>Checkout</h2>
+    <p>Total Amount: ₹{{ cartTotal }}</p>
+
+    <button (click)="payWithRazorpay()" [disabled]="isProcessing">
+        {{ isProcessing ? 'Processing...' : 'Pay Now' }}
+    </button>
+</section>
