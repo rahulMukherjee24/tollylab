@@ -1,0 +1,17 @@
+<section class="selected-product">
+    <h2>{{ filmType | uppercase }} Frames</h2>
+
+    <div *ngIf="isLoading" class="spinner-wrapper">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="grid" *ngIf="!isLoading && images.length > 0">
+        <div class="card" *ngFor="let img of images">
+            <img [src]="img" alt="Frame" loading="lazy" />
+        </div>
+    </div>
+
+    <p *ngIf="!isLoading && images.length === 0" class="no-data">
+        No frames found for this film type.
+    </p>
+</section>

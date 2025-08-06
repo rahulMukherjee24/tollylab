@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { RouterModule } from '@angular/router';
 import { map, Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { AddToCartButtonComponent } from '../components/add-to-cart/add-to-cart-button.component';
-import { CartItem, CartService } from '../service/cart.service';
 import { FormsModule } from '@angular/forms';
+import { AddToCartButtonComponent } from '../add-to-cart/add-to-cart-button.component';
+import { CartItem, CartService } from '../../service/cart.service';
 
 @Component({
   standalone: true,

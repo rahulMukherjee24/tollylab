@@ -5,19 +5,26 @@
     </div>
 
     <div class="scroll-wrapper">
+        <!-- Left Arrow -->
         <button class="arrow left" (click)="scrollLeft(scrollContainer)">&#10094;</button>
 
+        <!-- Scrollable Product List -->
         <div class="product-scroll" #scrollContainer>
-            <div class="product-card" *ngFor="let film of products; let i = index">
+            <div class="product-card" *ngFor="let film of products; let i = index"
+                (click)="goToSelectedProduct(film.filmType)">
                 <img [src]="film.img" [alt]="film.title" />
                 <h4>{{ film.title }}</h4>
                 <p class="price">₹{{ film.price }}</p>
-                <button class="cart-btn" [class.clicked]="clickedIndex === i" (click)="handleAddToCart(film, i)">
+
+                <!-- Add to Cart Button -->
+                <button class="cart-btn" [class.clicked]="clickedIndex === i"
+                    (click)="handleAddToCart(film, i); $event.stopPropagation()">
                     🛒 Add to Cart
                 </button>
             </div>
-
         </div>
+
+        <!-- Right Arrow -->
         <button class="arrow right" (click)="scrollRight(scrollContainer)">&#10095;</button>
     </div>
 </section>

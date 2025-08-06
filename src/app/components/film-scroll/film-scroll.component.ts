@@ -4,11 +4,13 @@ import { AddToCartButtonComponent } from '../add-to-cart/add-to-cart-button.comp
 import { CartItem, CartService } from '../../service/cart.service';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { map } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface FilmProduct {
   title: string;
   img: string;
   price: number;
+  filmType: string;
 }
 
 @Component({
@@ -22,17 +24,23 @@ export class FilmScrollComponent implements OnInit {
   products: FilmProduct[] = [];
   clickedIndex: number | null = null;
 
-  constructor(private firestore: Firestore, private cartService: CartService) {}
+  constructor(
+    private firestore: Firestore,
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     const filmCol = collection(this.firestore, 'filmScroll');
+
     collectionData(filmCol, { idField: 'id' })
       .pipe(
         map((docs: any[]) =>
           docs.map((doc) => ({
-            title: this.formatTitle(doc.filmType),
+            title: this.formatTitle(doc.filmType || ''),
             img: doc.url,
             price: doc.price || 0,
+            filmType: doc.filmType || '',
           }))
         )
       )
@@ -68,5 +76,9 @@ export class FilmScrollComponent implements OnInit {
     setTimeout(() => {
       this.clickedIndex = null;
     }, 600);
+  }
+
+  goToSelectedProduct(filmType: string): void {
+    this.router.navigate(['/selected-product', filmType]);
   }
 }

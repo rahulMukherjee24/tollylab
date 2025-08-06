@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { FrameAdminComponent } from './components/frame-admin/frame-admin.component';
-import { FrameGalleryComponent } from './frame-gallery/frame-gallery.component';
 import { CartComponent } from './components/cart/cart.component';
 import { FilmScrollAdminComponent } from './components/film-scroll-admin/film-scroll-admin.component';
+import { FrameGalleryComponent } from './components/frame-gallery/frame-gallery.component';
 
 export const routes: Routes = [
   {
@@ -22,5 +22,12 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+  },
+  {
+    path: 'selected-product/:filmType',
+    loadComponent: () =>
+      import('./components/selected-product/selected-product.component').then(
+        (m) => m.SelectedProductComponent
+      ),
   },
 ];
