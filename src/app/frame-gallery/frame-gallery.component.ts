@@ -5,22 +5,33 @@ import { RouterModule } from '@angular/router';
 import { map, Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { AddToCartButtonComponent } from '../components/add-to-cart/add-to-cart-button.component';
 import { CartItem, CartService } from '../service/cart.service';
+import { FormsModule } from '@angular/forms';
+
+interface FrameDoc {
+  url: string;
+  filmType?: string;
+}
 
 @Component({
   standalone: true,
   selector: 'app-frame-gallery',
-  imports: [CommonModule, RouterModule, AddToCartButtonComponent],
+  imports: [CommonModule, RouterModule, AddToCartButtonComponent, FormsModule],
   templateUrl: './frame-gallery.component.html',
   styleUrls: ['./frame-gallery.component.scss'],
 })
 export class FrameGalleryComponent implements OnInit {
-  private allUrlsSubject = new BehaviorSubject<string[]>([]);
+  private allFramesSubject = new BehaviorSubject<FrameDoc[]>([]);
   private currentPageSubject = new BehaviorSubject<number>(1);
-  readonly itemsPerPage = 10;
+  private selectedFilmTypeSubject = new BehaviorSubject<string>('all');
 
+  readonly itemsPerPage = 10;
   pagedUrls$!: Observable<string[]>;
   totalPages = 1;
   isLoading = true;
+  selectedFilmType = 'all';
+
+  // Filter dropdown options
+  filmTypes = ['all', 'bnw', 'color', 'infrared'];
 
   constructor(private firestore: Firestore, private cartService: CartService) {}
 
@@ -28,19 +39,36 @@ export class FrameGalleryComponent implements OnInit {
     const frameCollection = collection(this.firestore, 'frameCounter');
 
     collectionData(frameCollection)
-      .pipe(map((docs: any[]) => docs.map((doc) => doc.url)))
-      .subscribe((urls) => {
-        this.totalPages = Math.ceil(urls.length / this.itemsPerPage);
-        this.allUrlsSubject.next(urls);
+      .pipe(
+        map((docs: any[]) =>
+          docs.map((doc) => ({
+            url: doc.url,
+            filmType: doc.filmType || 'unknown',
+          }))
+        )
+      )
+      .subscribe((frames) => {
+        this.allFramesSubject.next(frames);
+        this.updateTotalPages(frames);
       });
 
     this.pagedUrls$ = combineLatest([
-      this.allUrlsSubject.asObservable(),
+      this.allFramesSubject.asObservable(),
+      this.selectedFilmTypeSubject.asObservable(),
       this.currentPageSubject.asObservable(),
     ]).pipe(
-      map(([allUrls, page]) => {
+      map(([allFrames, selectedType, page]) => {
+        let filtered =
+          selectedType === 'all'
+            ? allFrames
+            : allFrames.filter((f) => f.filmType === selectedType);
+
+        this.updateTotalPages(filtered);
+
         const start = (page - 1) * this.itemsPerPage;
-        return allUrls.slice(start, start + this.itemsPerPage);
+        return filtered
+          .slice(start, start + this.itemsPerPage)
+          .map((f) => f.url);
       })
     );
 
@@ -48,7 +76,7 @@ export class FrameGalleryComponent implements OnInit {
     this.pagedUrls$.subscribe(() => {
       setTimeout(() => {
         this.isLoading = false;
-      }, 300); // just enough to show spinner
+      }, 300);
     });
   }
 
@@ -60,6 +88,11 @@ export class FrameGalleryComponent implements OnInit {
     }
   }
 
+  changeFilmType(type: string): void {
+    this.selectedFilmTypeSubject.next(type);
+    this.currentPageSubject.next(1); // Reset to first page
+  }
+
   get currentPage(): number {
     return this.currentPageSubject.value;
   }
@@ -68,10 +101,15 @@ export class FrameGalleryComponent implements OnInit {
     const item: CartItem = {
       imageUrl: url,
       title: 'Frame Counter Image',
-      price: 199, // or use logic if price varies
+      price: 199,
     };
 
     this.cartService.addToCart(item);
     console.log('Added to cart:', item);
   }
+
+  private updateTotalPages(frames: FrameDoc[]): void {
+    this.totalPages = Math.ceil(frames.length / this.itemsPerPage) || 1;
+  }
+  
 }

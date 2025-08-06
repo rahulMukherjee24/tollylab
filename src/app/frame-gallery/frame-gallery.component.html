@@ -1,5 +1,12 @@
 <section class="gallery-container">
-    <h2>Frame Gallery</h2>
+    <div class="gallery-header">
+        <h2>Frame Gallery</h2>
+
+        <select [(ngModel)]="selectedFilmType" (change)="changeFilmType(selectedFilmType)">
+            <option value="">All Types</option>
+            <option *ngFor="let type of filmTypes" [value]="type">{{ type }}</option>
+        </select>
+    </div>
 
     <!-- Spinner -->
     <div *ngIf="isLoading" class="spinner-wrapper">
@@ -10,11 +17,6 @@
     <div class="gallery-grid" *ngIf="!isLoading">
         <div class="gallery-card" *ngFor="let url of pagedUrls$ | async">
             <img [src]="url" alt="Frame" loading="lazy" />
-
-            <!-- Add to Cart button -->
-            <!-- <button class="add-to-cart-btn" (click)="addToCart(url)">
-                🛒 Add to Cart
-            </button> -->
         </div>
     </div>
 
