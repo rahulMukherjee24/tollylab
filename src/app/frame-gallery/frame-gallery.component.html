@@ -1,26 +1,23 @@
 <section class="gallery-container">
     <div class="gallery-header">
         <h2>Frame Gallery</h2>
-
         <select [(ngModel)]="selectedFilmType" (change)="changeFilmType(selectedFilmType)">
-            <option value="">All Types</option>
-            <option *ngFor="let type of filmTypes" [value]="type">{{ type }}</option>
+            <option *ngFor="let type of filmTypes" [value]="type">
+                {{ type | titlecase }}
+            </option>
         </select>
     </div>
 
-    <!-- Spinner -->
     <div *ngIf="isLoading" class="spinner-wrapper">
         <div class="spinner"></div>
     </div>
 
-    <!-- Gallery Grid -->
     <div class="gallery-grid" *ngIf="!isLoading">
         <div class="gallery-card" *ngFor="let url of pagedUrls$ | async">
             <img [src]="url" alt="Frame" loading="lazy" />
         </div>
     </div>
 
-    <!-- Pagination -->
     <div class="pagination" *ngIf="totalPages > 1 && !isLoading">
         <button (click)="changePage(-1)" [disabled]="currentPage === 1">Prev</button>
         <span>Page {{ currentPage }} / {{ totalPages }}</span>
