@@ -31,7 +31,7 @@ export class FilmScrollComponent implements OnInit {
         map((docs: any[]) =>
           docs.map((doc) => ({
             title: this.formatTitle(doc.filmType),
-            img: `assets/${doc.filmType.toLowerCase()}.png`,
+            img: doc.url,
             price: doc.price || 0,
           }))
         )

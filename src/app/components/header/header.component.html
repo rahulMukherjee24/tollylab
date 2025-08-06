@@ -9,7 +9,15 @@
         <a routerLink="/">Home</a>
         <a routerLink="/films">Films</a>
         <a routerLink="/about">About</a>
-        <a *ngIf="isAdmin" routerLink="/admin">Admin</a>
+        <div *ngIf="isAdmin" class="admin-dropdown">
+            <a class="admin-link" (click)="toggleDesktopAdminDropdown()">Admin ▾</a>
+            <ul class="admin-submenu" [class.open]="desktopAdminDropdownOpen">
+                <li><a routerLink="/frames">Add Frames</a></li>
+                <li><a routerLink="/films">Add Films</a></li>
+            </ul>
+        </div>
+
+
     </nav>
 
     <!-- Right: Buttons + Hamburger -->
@@ -48,11 +56,16 @@
         <li><a routerLink="/" (click)="closeMobileMenu()">Home</a></li>
         <li><a routerLink="/films" (click)="closeMobileMenu()">Films</a></li>
         <li><a routerLink="/about" (click)="closeMobileMenu()">About</a></li>
-        <li>
-            <ng-container *ngIf="isAdmin">
-                <a routerLink="/admin" (click)="closeMobileMenu()">Admin</a>
-            </ng-container>
-        </li>
+        <ng-container *ngIf="isAdmin">
+            <li (click)="toggleMobileAdminDropdown()" style="cursor: pointer;">
+                Admin ▾
+            </li>
+            <ul *ngIf="mobileAdminDropdownOpen" class="mobile-submenu">
+                <li><a routerLink="/frames" (click)="closeMobileMenu()">Add Frames</a></li>
+                <li><a routerLink="/films" (click)="closeMobileMenu()">Add Films</a></li>
+            </ul>
+        </ng-container>
+
         <li>
             <ng-container *ngIf="!isLoggedIn">
                 <button class="btn" (click)="openLogin(); closeMobileMenu()">Login</button>

@@ -14,6 +14,12 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
   constructor(private router: Router) {}
+  showAdminDropdown = false;
+  mobileAdminDropdownOpen = false;
+
+  toggleMobileAdminDropdown() {
+    this.mobileAdminDropdownOpen = !this.mobileAdminDropdownOpen;
+  }
 
   navigateAndClose(path: string) {
     this.router.navigate([path]);
@@ -75,5 +81,11 @@ export class HeaderComponent {
 
   openCart() {
     this.router.navigate(['/cart']);
+  }
+
+  desktopAdminDropdownOpen = false;
+
+  toggleDesktopAdminDropdown() {
+    this.desktopAdminDropdownOpen = !this.desktopAdminDropdownOpen;
   }
 }
