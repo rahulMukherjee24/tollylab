@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PaymentService {
-  private apiUrl = 'http://localhost:5000/api/payment'; // backend URL
+  private apiUrl = 'https://tollylab-backend.vercel.app/api/payment'; // backend URL
 
   constructor(private http: HttpClient) {}
 

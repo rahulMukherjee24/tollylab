@@ -32,9 +32,12 @@ export class CheckoutComponent {
 
     // Call backend to create order
     this.http
-      .post<{ id: string }>('http://localhost:5000/create-order', {
-        amount: this.cartTotal * 100, // Convert to paise
-      })
+      .post<{ id: string }>(
+        'https://tollylab-backend.vercel.app/create-order',
+        {
+          amount: this.cartTotal, // Convert to paise
+        }
+      )
       .subscribe({
         next: (order) => {
           this.isProcessing = false;
