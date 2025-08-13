@@ -8,5 +8,5 @@ export const environment = {
     messagingSenderId: '976579242925',
     appId: '1:976579242925:web:d470f0f3dbb46536174f24',
   },
-  razorpayKeyId: 'rzp_test_9Cv3njO4B1s0Jb',
+  razorpayKeyId: 'rzp_live_oZe0H58zvR196S',
 };
