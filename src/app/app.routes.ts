@@ -37,4 +37,11 @@ export const routes: Routes = [
         (m) => m.CheckoutComponent
       ),
   },
+  {
+    path: 'orderHistory',
+    loadComponent: () =>
+      import('./components/order-history/order-history.component').then(
+        (m) => m.OrderHistoryComponent
+      ),
+  },
 ];

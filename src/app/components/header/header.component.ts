@@ -71,6 +71,7 @@ export class HeaderComponent {
 
   goToOrders() {
     this.dropdownOpen = false;
+    this.router.navigate(['/orderHistory']);
     // navigate to orders
   }
 

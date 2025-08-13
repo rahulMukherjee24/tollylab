@@ -1,0 +1,35 @@
+<div class="order-history-container" *ngIf="!loading; else loadingTpl">
+    <h2 class="page-title">Your Orders</h2>
+
+    <div *ngIf="orders.length === 0" class="empty-state">
+        <p>No orders found.</p>
+    </div>
+
+    <div *ngFor="let order of orders" class="order-card">
+        <div class="order-header">
+            <span class="order-id">Order ID: {{ order.orderId }}</span>
+            <span class="status">{{ order.status }}</span>
+        </div>
+
+        <div class="items">
+            <div class="item" *ngFor="let item of order.items">
+                <img [src]="item.imageUrl" alt="product" />
+                <div class="item-details">
+                    <p class="item-title">{{ item.title }}</p>
+                    <p class="item-price">₹{{ item.price }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-footer">
+            <span class="total">Total: ₹{{ order.total }}</span>
+            <span class="date">{{ order.createdAt?.toDate() | date: 'medium' }}</span>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingTpl>
+    <div class="loading">
+        <p>Loading your orders...</p>
+    </div>
+</ng-template>
