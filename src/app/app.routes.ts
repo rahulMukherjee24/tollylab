@@ -44,4 +44,11 @@ export const routes: Routes = [
         (m) => m.OrderHistoryComponent
       ),
   },
+  {
+    path: 'darkRoom',
+    loadComponent: () =>
+      import('./components/darkroom/darkroom.component').then(
+        (m) => m.DarkroomComponent
+      ),
+  },
 ];
