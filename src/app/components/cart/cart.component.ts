@@ -11,22 +11,36 @@ import { CartItem, CartService } from '../../service/cart.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartItems: CartItem[] = [];
+  cartItems: (CartItem & { quantity: number })[] = [];
 
   constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartService.cartItems$.subscribe((items) => {
-      this.cartItems = items;
+      this.cartItems = items.map((item) => ({
+        ...item,
+        quantity: (item as any).quantity || 1,
+      }));
     });
   }
 
-  removeFromCart(item: CartItem): void {
-    this.cartService.removeFromCart(item);
+  removeFromCartAt(index: number): void {
+    this.cartService.removeAt(index);
+  }
+
+  increaseQuantity(item: any): void {
+    item.quantity++;
+  }
+
+  decreaseQuantity(item: any): void {
+    if (item.quantity > 1) item.quantity--;
   }
 
   getTotalPrice(): number {
-    return this.cartItems.reduce((total, item) => total + item.price, 0);
+    return this.cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
   }
 
   proceedToCheckout(): void {

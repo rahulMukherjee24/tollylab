@@ -33,7 +33,11 @@ export class CheckoutComponent {
   ) {
     this.cartService.cartItems$.subscribe((items) => {
       this.cartItems = items;
-      this.cartTotal = items.reduce((sum, item) => sum + item.price, 0);
+      // ✅ Correct total with quantity support
+      this.cartTotal = items.reduce(
+        (sum, item) => sum + item.price * (item.quantity || 1),
+        0
+      );
     });
   }
 
@@ -66,7 +70,7 @@ export class CheckoutComponent {
   openRazorpay(orderId: string) {
     const options: any = {
       key: environment.razorpayKeyId,
-      amount: this.cartTotal * 100, // Razorpay needs paise
+      amount: this.cartTotal * 100, // Razorpay uses paise
       currency: 'INR',
       name: 'Tollylab',
       description: 'Order Payment',
@@ -84,6 +88,7 @@ export class CheckoutComponent {
               items: this.cartItems.map((item) => ({
                 title: item.title,
                 price: item.price,
+                quantity: item.quantity || 1,
                 imageUrl: item.imageUrl,
               })),
               total: this.cartTotal,
@@ -91,8 +96,14 @@ export class CheckoutComponent {
               createdAt: serverTimestamp(),
             });
 
-            // Redirect to order history page
-            this.router.navigate(['/order-history']);
+            // ✅ Clear cart and reset total instantly
+            this.cartService.clearCart();
+            this.cartTotal = 0;
+
+            // ✅ Give Angular time to update UI before navigating
+            setTimeout(() => {
+              this.router.navigate(['/orderHistory']);
+            }, 50);
           } catch (error) {
             console.error('Error saving order:', error);
             alert('Your payment succeeded but saving the order failed.');

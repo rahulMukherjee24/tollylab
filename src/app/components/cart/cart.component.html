@@ -2,13 +2,20 @@
     <h2>Your Cart</h2>
 
     <div class="cart-grid">
-        <div class="cart-item" *ngFor="let item of cartItems">
+        <div class="cart-item" *ngFor="let item of cartItems; let i = index">
             <img [src]="item.imageUrl" alt="{{ item.title }}" />
             <div class="item-details">
                 <h3>{{ item.title }}</h3>
                 <p *ngIf="item.size">Size: {{ item.size }}</p>
-                <p class="price">₹{{ item.price }}</p>
-                <button class="remove-btn" (click)="removeFromCart(item)">Remove</button>
+                <p class="price">₹{{ item.price * item.quantity }}</p>
+
+                <div class="quantity-controls">
+                    <button class="qty-btn" (click)="decreaseQuantity(item)">−</button>
+                    <span>{{ item.quantity }}</span>
+                    <button class="qty-btn" (click)="increaseQuantity(item)">+</button>
+                </div>
+
+                <button class="remove-btn" (click)="removeFromCartAt(i)">Remove</button>
             </div>
         </div>
     </div>

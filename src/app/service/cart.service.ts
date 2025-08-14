@@ -6,11 +6,10 @@ export interface CartItem {
   title: string;
   price: number;
   size?: string;
+  quantity?: number;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class CartService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
@@ -20,13 +19,30 @@ export class CartService {
   }
 
   addToCart(item: CartItem): void {
-    const currentItems = this.getCartItems();
-    this.cartItemsSubject.next([...currentItems, item]);
+    const current = this.getCartItems();
+    this.cartItemsSubject.next([...current, item]);
   }
 
+  // NEW: remove by index (removes a single occurrence)
+  removeAt(index: number): void {
+    const items = [...this.getCartItems()];
+    if (index >= 0 && index < items.length) {
+      items.splice(index, 1);
+      this.cartItemsSubject.next(items);
+    }
+  }
+
+  // (optional) keep old API but make it value-based if you still call it elsewhere
   removeFromCart(item: CartItem): void {
-    const updatedItems = this.getCartItems().filter((i) => i !== item);
-    this.cartItemsSubject.next(updatedItems);
+    const items = [...this.getCartItems()];
+    const idx = items.findIndex(
+      (i) =>
+        i.title === item.title &&
+        i.price === item.price &&
+        i.imageUrl === item.imageUrl &&
+        (i.size ?? '') === (item.size ?? '')
+    );
+    if (idx !== -1) this.removeAt(idx);
   }
 
   clearCart(): void {
