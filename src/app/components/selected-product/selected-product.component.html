@@ -1,17 +1,45 @@
 <section class="selected-product">
-    <h2>{{ filmType | uppercase }} Frames</h2>
+    <!-- 1️⃣ Product Detail -->
+    <div class="product-header" *ngIf="productDetail">
+        <div class="product-hero">
+            <div class="product-image">
+                <img [src]="productDetail.img" alt="{{ productDetail.title }}" />
+            </div>
+
+            <div class="product-info">
+                <h2>{{ productDetail.title }}</h2>
+                <p class="description">{{ productDetail.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2️⃣ Collage Frames -->
+    <h3 class="frames-heading">{{ filmType | uppercase }} Frames</h3>
 
     <div *ngIf="isLoading" class="spinner-wrapper">
         <div class="spinner"></div>
     </div>
 
-    <div class="grid" *ngIf="!isLoading && images.length > 0">
-        <div class="card" *ngFor="let img of images">
-            <img [src]="img" alt="Frame" loading="lazy" />
-        </div>
+    <div class="frames-collage" *ngIf="!isLoading && images.length > 0">
+        <img *ngFor="let img of images" [src]="img" alt="Frame" loading="lazy" />
     </div>
 
     <p *ngIf="!isLoading && images.length === 0" class="no-data">
         No frames found for this film type.
     </p>
+
+    <!-- 3️⃣ More Products Carousel -->
+    <div class="more-products" *ngIf="moreProducts.length > 0">
+        <h3>More Products</h3>
+        <div class="scroll-wrapper">
+            <div class="product-scroll">
+                <div class="product-card" *ngFor="let film of moreProducts"
+                    (click)="goToSelectedProduct(film.filmType)">
+                    <img [src]="film.img" [alt]="film.title" />
+                    <h4>{{ film.title }}</h4>
+                    <p class="price">₹{{ film.price }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
