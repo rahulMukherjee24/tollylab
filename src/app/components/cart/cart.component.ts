@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCartAt(index: number): void {
-    this.cartService.removeAt(index);
+    // this.cartService.removeAt(index);
   }
 
   increaseQuantity(item: any): void {
