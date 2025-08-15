@@ -1,5 +1,13 @@
-<div class="card-actions">
-    <button class="cart-btn" (click)="handleClick($event)">
-        🛒 Add to Cart
+<div class="add-to-cart">
+    <!-- Show Add to Cart button if quantity is 0 -->
+    <button *ngIf="quantity === 0" (click)="add()" class="btn add-btn">
+        Add to Cart
     </button>
+
+    <!-- Show + / - controls if quantity > 0 -->
+    <div *ngIf="quantity > 0" class="qty-controls">
+        <button (click)="decrease()" class="btn qty-btn">−</button>
+        <span class="qty">{{ quantity }}</span>
+        <button (click)="increase()" class="btn qty-btn">+</button>
+    </div>
 </div>

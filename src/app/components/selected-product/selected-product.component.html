@@ -9,7 +9,19 @@
             <div class="product-info">
                 <h2>{{ productDetail.title }}</h2>
                 <p class="description">{{ productDetail.description }}</p>
+
+                <!-- Add-to-cart component -->
+                <div *ngIf="productDetail" (click)="$event.stopPropagation()">
+                    <add-to-cart [item]="{
+                imageUrl: productDetail.img,
+                title: productDetail.title,
+                price: productDetail.price || 0,
+                quantity: 1
+            }">
+                    </add-to-cart>
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -28,7 +40,6 @@
         No frames found for this film type.
     </p>
 
-    <!-- 3️⃣ More Products Carousel -->
     <div class="more-products" *ngIf="moreProducts.length > 0">
         <h3>More Products</h3>
         <div class="scroll-wrapper">
@@ -38,6 +49,17 @@
                     <img [src]="film.img" [alt]="film.title" />
                     <h4>{{ film.title }}</h4>
                     <p class="price">₹{{ film.price }}</p>
+
+                    <!-- Add-to-cart component -->
+                    <div (click)="$event.stopPropagation()">
+                        <add-to-cart [item]="{
+              imageUrl: film.img,
+              title: film.title,
+              price: film.price || 0,
+              quantity: 1
+            }">
+                        </add-to-cart>
+                    </div>
                 </div>
             </div>
         </div>

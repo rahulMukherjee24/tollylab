@@ -6,7 +6,6 @@
     .gallery-header {
         display: flex;
         flex-wrap: wrap;
-        /* allow wrap on mobile */
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1.5rem;
@@ -59,7 +58,7 @@
             break-inside: avoid;
             margin-bottom: 1rem;
             background-color: #181818;
-            border-radius: 12px;
+            border-radius: 0; // sharp corners
             overflow: hidden;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease;
@@ -74,6 +73,7 @@
                 height: auto;
                 display: block;
                 object-fit: cover;
+                border-radius: 0; // sharp corners
                 transition: transform 0.3s ease;
 
                 &:hover {

@@ -9,6 +9,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { map } from 'rxjs';
+import { AddToCartButtonComponent } from '../add-to-cart/add-to-cart-button.component';
 
 interface ProductDetail {
   title: string;
@@ -21,7 +22,7 @@ interface ProductDetail {
 @Component({
   selector: 'app-selected-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AddToCartButtonComponent],
   templateUrl: './selected-product.component.html',
   styleUrls: ['./selected-product.component.scss'],
 })

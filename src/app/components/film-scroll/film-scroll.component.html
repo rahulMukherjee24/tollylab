@@ -16,21 +16,16 @@
                 <h4>{{ film.title }}</h4>
                 <p class="price">₹{{ film.price }}</p>
 
-                <!-- show qty control if present, otherwise Add to Cart -->
-                <ng-container *ngIf="getQuantityForProduct(film) > 0; else addButton">
-                    <div class="quantity-control" (click)="$event.stopPropagation()">
-                        <button (click)="decreaseQty(film, $event)">-</button>
-                        <span>{{ getQuantityForProduct(film) }}</span>
-                        <button (click)="increaseQty(film, $event)">+</button>
-                    </div>
-                </ng-container>
-
-                <ng-template #addButton>
-                    <button class="cart-btn" [class.clicked]="clickedIndex === i"
-                        (click)="handleAddToCart(film, i, $event)">
-                        🛒 Add to Cart
-                    </button>
-                </ng-template>
+                <!-- Add-to-cart component -->
+                <div (click)="$event.stopPropagation()">
+                    <add-to-cart [item]="{
+              imageUrl: film.img,
+              title: film.title,
+              price: film.price,
+              quantity: 1
+            }">
+                    </add-to-cart>
+                </div>
             </div>
         </div>
 
