@@ -1,3 +1,4 @@
+import { SignupComponent } from './components/signup/signup.component';
 import { Routes } from '@angular/router';
 import { LandingComponent } from './components/landing/landing.component';
 import { FrameAdminComponent } from './components/frame-admin/frame-admin.component';
@@ -49,6 +50,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/darkroom/darkroom.component').then(
         (m) => m.DarkroomComponent
+      ),
+  },
+  {
+    path: 'signUp',
+    loadComponent: () =>
+      import('./components/signup/signup.component').then(
+        (m) => m.SignupComponent
       ),
   },
 ];

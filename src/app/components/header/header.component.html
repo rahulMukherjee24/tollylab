@@ -23,7 +23,7 @@
     <!-- Right: Buttons + Hamburger -->
     <div class="navbar-right">
         <!-- Cart & Profile visible if logged in -->
-        <ng-container *ngIf="isLoggedIn">
+        <ng-container>
             <button class="btn cart-icon" (click)="openCart()">🛒</button>
 
             <div class="profile-container" (click)="toggleProfileTray()" (clickOutside)="showProfileTray = false">
