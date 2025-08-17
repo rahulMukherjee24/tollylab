@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  getDocs,
+} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-frame-admin',
@@ -10,19 +15,37 @@ import { Firestore, collection, addDoc } from '@angular/fire/firestore';
   templateUrl: './frame-admin.component.html',
   styleUrls: ['./frame-admin.component.scss'],
 })
-export class FrameAdminComponent {
+export class FrameAdminComponent implements OnInit {
   imageUrl: string = '';
   selectedFilmType: string = '';
   successMessage = '';
   errorMessage = '';
 
-  filmTypes = [
-    { key: 'bnw', value: 'Black and White' },
-    { key: 'color', value: 'Color' },
-    { key: 'infrared', value: 'Infrared' },
-  ];
+  filmTypes: { key: string; value: string }[] = [];
 
   constructor(private firestore: Firestore) {}
+
+  async ngOnInit() {
+    await this.loadFilmTypes();
+  }
+
+  async loadFilmTypes() {
+    try {
+      const filmScrollRef = collection(this.firestore, 'filmScroll');
+      const snapshot = await getDocs(filmScrollRef);
+
+      this.filmTypes = snapshot.docs.map((doc) => {
+        const data = doc.data() as any;
+        return {
+          key: data.filmType, // e.g., "neon"
+          value: data.label, // e.g., "Neon"
+        };
+      });
+    } catch (error) {
+      console.error('Error fetching film types:', error);
+      this.errorMessage = 'Failed to load film types.';
+    }
+  }
 
   async addImage() {
     this.successMessage = '';
