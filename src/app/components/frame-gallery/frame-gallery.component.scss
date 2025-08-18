@@ -43,43 +43,41 @@
     }
 
     .gallery-grid {
-        column-count: 2;
+        column-count: 4;
         column-gap: 1rem;
 
-        @media (min-width: 768px) {
+        @media (max-width: 1024px) {
             column-count: 3;
         }
 
-        @media (min-width: 1024px) {
-            column-count: 4;
+        @media (max-width: 768px) {
+            column-count: 2;
         }
 
-        .gallery-card {
-            break-inside: avoid;
-            margin-bottom: 1rem;
-            background-color: #181818;
-            border-radius: 0; // sharp corners
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
+        @media (max-width: 480px) {
+            column-count: 1;
+        }
+    }
+
+    .gallery-card {
+        display: inline-block;
+        width: 100%;
+        margin: 0 0 1rem;
+        border-radius: 0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+        /* Prevent breaking inside columns */
+        break-inside: avoid;
+        page-break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+        -moz-column-break-inside: avoid;
+
+        img {
+            width: 100%;
+            height: auto;
             display: block;
-
-            &:hover {
-                transform: translateY(-5px);
-            }
-
-            img {
-                width: 100%;
-                height: auto;
-                display: block;
-                object-fit: cover;
-                border-radius: 0; // sharp corners
-                transition: transform 0.3s ease;
-
-                &:hover {
-                    transform: scale(1.05);
-                }
-            }
+            object-fit: cover; // keeps collage look without stretching
+            border-radius: 0;
         }
     }
 
