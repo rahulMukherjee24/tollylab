@@ -13,8 +13,8 @@
     </div>
 
     <div class="gallery-grid" *ngIf="!isLoading">
-        <div class="gallery-card" *ngFor="let url of pagedUrls$ | async">
-            <img [src]="url" alt="Frame" loading="lazy" />
+        <div class="gallery-card" *ngFor="let url of pagedUrls$ | async; let i = index">
+            <img [src]="url" alt="Frame" loading="lazy" (click)="openModal(i)" />
         </div>
     </div>
 
@@ -24,3 +24,14 @@
         <button (click)="changePage(1)" [disabled]="currentPage === totalPages">Next</button>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="lightbox" *ngIf="isModalOpen">
+    <span class="close-btn" (click)="closeModal()">&times;</span>
+
+    <div class="lightbox-content">
+        <button class="nav-btn left" (click)="prevImage()">&#10094;</button>
+        <img [src]="modalImages[currentIndex]" alt="Frame" class="lightbox-img" />
+        <button class="nav-btn right" (click)="nextImage()">&#10095;</button>
+    </div>
+</div>

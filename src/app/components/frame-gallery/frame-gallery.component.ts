@@ -14,6 +14,7 @@ import { CartItem, CartService } from '../../service/cart.service';
   templateUrl: './frame-gallery.component.html',
   styleUrls: ['./frame-gallery.component.scss'],
 })
+// ... imports remain same
 export class FrameGalleryComponent implements OnInit {
   filmTypes: string[] = ['all'];
   selectedFilmType = 'all';
@@ -30,6 +31,11 @@ export class FrameGalleryComponent implements OnInit {
   totalPages = 1;
   isLoading = true;
 
+  // Modal state
+  isModalOpen = false;
+  modalImages: string[] = [];
+  currentIndex = 0;
+
   constructor(private firestore: Firestore, private cartService: CartService) {}
 
   ngOnInit(): void {
@@ -38,13 +44,11 @@ export class FrameGalleryComponent implements OnInit {
     collectionData(frameCollection)
       .pipe(
         map((docs: any[]) => {
-          // Extract film types dynamically
           const types = Array.from(
             new Set(docs.map((doc) => doc.filmType).filter(Boolean))
           );
           this.filmTypes = ['all', ...types];
 
-          // Store the whole doc array for filtering later
           return docs.map((doc) => ({
             url: doc.url,
             filmType: doc.filmType || 'unknown',
@@ -56,7 +60,6 @@ export class FrameGalleryComponent implements OnInit {
         this.allItemsSubject.next(items);
       });
 
-    // Combine page changes + filter changes
     this.pagedUrls$ = combineLatest([
       this.allItemsSubject.asObservable(),
       this.currentPageSubject.asObservable(),
@@ -69,22 +72,20 @@ export class FrameGalleryComponent implements OnInit {
             : allItems.filter((item) => item.filmType === filter);
         this.totalPages = Math.ceil(filtered.length / this.itemsPerPage);
         const start = (page - 1) * this.itemsPerPage;
-        return filtered
-          .slice(start, start + this.itemsPerPage)
-          .map((item) => item.url);
+        const paged = filtered.slice(start, start + this.itemsPerPage);
+        this.modalImages = paged.map((item) => item.url); // Keep track for modal
+        return paged.map((item) => item.url);
       })
     );
 
     this.pagedUrls$.subscribe(() => {
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 300);
+      setTimeout(() => (this.isLoading = false), 300);
     });
   }
 
   changeFilmType(type: string): void {
     this.selectedFilmTypeSubject.next(type);
-    this.currentPageSubject.next(1); // Reset to first page on filter change
+    this.currentPageSubject.next(1);
   }
 
   changePage(delta: number): void {
@@ -107,4 +108,25 @@ export class FrameGalleryComponent implements OnInit {
     };
     this.cartService.addToCart(item);
   }
+
+  // Modal functions
+  openModal(index: number) {
+    this.currentIndex = index;
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  prevImage() {
+    this.currentIndex =
+      (this.currentIndex - 1 + this.modalImages.length) %
+      this.modalImages.length;
+  }
+
+  nextImage() {
+    this.currentIndex = (this.currentIndex + 1) % this.modalImages.length;
+  }
 }
+

@@ -66,7 +66,6 @@
         border-radius: 0;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 
-        /* Prevent breaking inside columns */
         break-inside: avoid;
         page-break-inside: avoid;
         -webkit-column-break-inside: avoid;
@@ -76,8 +75,14 @@
             width: 100%;
             height: auto;
             display: block;
-            object-fit: cover; // keeps collage look without stretching
+            object-fit: cover;
             border-radius: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+
+            &:hover {
+                transform: scale(1.02);
+            }
         }
     }
 
@@ -113,6 +118,7 @@
     }
 }
 
+/* Spinner */
 .spinner-wrapper {
     display: flex;
     justify-content: center;
@@ -132,5 +138,73 @@
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* 🔥 Lightbox Modal */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            color: #f9cc00;
+        }
+    }
+
+    .lightbox-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        max-width: 90%;
+        max-height: 90%;
+
+        .lightbox-img {
+            max-width: 80vw;
+            max-height: 80vh;
+            border-radius: 6px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 50%;
+            transition: background 0.2s;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            &.left {
+                margin-right: 1rem;
+            }
+
+            &.right {
+                margin-left: 1rem;
+            }
+        }
     }
 }
