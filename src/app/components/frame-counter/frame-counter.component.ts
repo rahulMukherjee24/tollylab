@@ -19,8 +19,8 @@ import { CartItem, CartService } from '../../service/cart.service';
   styleUrls: ['./frame-counter.component.scss'],
 })
 export class FrameCounterComponent implements OnInit {
-  constructor(private router: Router, private cartService: CartService) {}
   private firestore = inject(Firestore);
+
   frames: string[] = [];
   loading = true;
   error: string | null = null;
@@ -28,19 +28,27 @@ export class FrameCounterComponent implements OnInit {
   @ViewChild('scrollContainer', { static: true })
   scrollContainerRef!: ElementRef;
 
-  async ngOnInit(): Promise<void> {
-    try {
-      const colRef = collection(this.firestore, 'frameCounter');
-      const snapshot = await getDocs(colRef);
-      this.frames = snapshot.docs
-        .map((doc) => doc.data()['url'])
-        .filter(Boolean);
-    } catch (err) {
-      console.error('Error fetching frameCounter data:', err);
-      this.error = 'Failed to load frames';
-    } finally {
-      this.loading = false;
-    }
+  constructor(private router: Router, private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.loadFrames();
+  }
+
+  private loadFrames(): void {
+    const colRef = collection(this.firestore, 'frameCounter');
+    getDocs(colRef)
+      .then((snapshot) => {
+        this.frames = snapshot.docs
+          .map((doc) => doc.data()['url'])
+          .filter(Boolean);
+      })
+      .catch((err) => {
+        console.error('Error fetching frameCounter data:', err);
+        this.error = 'Failed to load frames';
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   scrollFrames(direction: 'left' | 'right') {
@@ -60,7 +68,7 @@ export class FrameCounterComponent implements OnInit {
     const item: CartItem = {
       imageUrl: url,
       title: 'Frame Counter Image',
-      price: 199, // or use logic if price varies
+      price: 199,
     };
 
     this.cartService.addToCart(item);

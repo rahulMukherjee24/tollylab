@@ -25,26 +25,28 @@ export class FrameAdminComponent implements OnInit {
 
   constructor(private firestore: Firestore) {}
 
-  async ngOnInit() {
-    await this.loadFilmTypes();
+  // synchronous ngOnInit
+  ngOnInit(): void {
+    this.loadFilmTypes();
   }
 
-  async loadFilmTypes() {
-    try {
-      const filmScrollRef = collection(this.firestore, 'filmScroll');
-      const snapshot = await getDocs(filmScrollRef);
+  private loadFilmTypes(): void {
+    const filmScrollRef = collection(this.firestore, 'filmScroll');
 
-      this.filmTypes = snapshot.docs.map((doc) => {
-        const data = doc.data() as any;
-        return {
-          key: data.filmType, // e.g., "neon"
-          value: data.label, // e.g., "Neon"
-        };
+    getDocs(filmScrollRef)
+      .then((snapshot) => {
+        this.filmTypes = snapshot.docs.map((doc) => {
+          const data = doc.data() as any;
+          return {
+            key: data.filmType, // e.g., "neon"
+            value: data.label, // e.g., "Neon"
+          };
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching film types:', error);
+        this.errorMessage = 'Failed to load film types.';
       });
-    } catch (error) {
-      console.error('Error fetching film types:', error);
-      this.errorMessage = 'Failed to load film types.';
-    }
   }
 
   async addImage() {

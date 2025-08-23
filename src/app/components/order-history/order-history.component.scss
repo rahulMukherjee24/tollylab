@@ -30,6 +30,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            align-items: center;
             font-size: 0.9rem;
             font-weight: 500;
             color: #333;
@@ -37,6 +38,15 @@
             .status {
                 color: #0a84ff;
                 font-weight: 600;
+                cursor: text;
+                outline: none;
+                transition: background 0.2s ease, padding 0.2s ease;
+
+                &:focus {
+                    background: #f0f0f0;
+                    border-radius: 4px;
+                    padding: 2px 4px;
+                }
             }
         }
 
