@@ -57,7 +57,7 @@
         <li><a routerLink="/films" (click)="closeMobileMenu()">Films</a></li>
         <li><a routerLink="/about" (click)="closeMobileMenu()">About</a></li>
         <ng-container *ngIf="isAdmin">
-            <li (click)="toggleMobileAdminDropdown()" style="cursor: pointer;">
+            <li class="admin-option" (click)="toggleMobileAdminDropdown()" style="cursor: pointer; font-size: 1.2rem; font-weight: 600;">
                 Admin ▾
             </li>
             <ul *ngIf="mobileAdminDropdownOpen" class="mobile-submenu">
